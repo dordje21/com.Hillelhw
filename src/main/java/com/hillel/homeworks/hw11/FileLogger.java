@@ -1,27 +1,30 @@
 package com.hillel.homeworks.hw11;
 
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.logging.*;
+import java.io.*;
+import java.util.Scanner;
+import java.util.logging.Level;
 
 public class FileLogger extends Logger{
+    public File file = new File("FileLogger.txt");
 
-//    public void log(String messege){
-//        try(FileWriter fileWriter = new FileWriter("FileLogger.txt")){
-//            fileWriter.write(messege);
-//        } catch (IOException e){
-//            e.printStackTrace();
-//        }
-//    }
 
     @Override
-    public void log(String messege) {
+    public void log(String messege, Level level) {
+        StringBuilder sb = new StringBuilder();
+        try(FileReader fileReader = new FileReader("FileLogger.txt")) {
+            Scanner sc = new Scanner(fileReader);
+            while (sc.hasNext()){
+                sb.append(sc.nextLine() + "\n");
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         try(FileWriter fileWriter = new FileWriter("FileLogger.txt")){
-            fileWriter.write(messege);
+            fileWriter.write(sb + "\t" + getTimeStamp() + " " + level + ": " + messege);
         } catch (IOException e){
             e.printStackTrace();
         }
-
     }
-
 }
