@@ -3,7 +3,7 @@ package com.hillel.homeworks.hw17;
 import java.util.Stack;
 
 public class Validator {
-    static String validateBraces(String string) {
+    public static String validateBraces(String string) {
         Stack<String> stack = new Stack<>();
         for(int i = 0; i <= string.length() - 1; i ++){
 
